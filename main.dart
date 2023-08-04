@@ -8,6 +8,10 @@ void main() {
 }
 
 class BadStatefulApp extends StatelessWidget {
+  final String title;
+
+  BadStatefulApp(this.title);
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,7 +26,8 @@ class BadStatefulScreen extends StatefulWidget {
 }
 
 class _BadStatefulScreenState extends State<BadStatefulScreen> {
-  List<dynamic> data = [];
+  final List<dynamic> data = [];
+  const apiUrl = 'https://api.example.com/data';
 
   @override
   void initState() {
@@ -31,7 +36,7 @@ class _BadStatefulScreenState extends State<BadStatefulScreen> {
   }
 
   fetchData() async {
-    var url = Uri.parse('https://api.example.com/data');
+    var url = Uri.parse(apiUrl);
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -47,7 +52,7 @@ class _BadStatefulScreenState extends State<BadStatefulScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Плохой Пример Stateful Widget'),
+        title: Text(widget.title),
       ),
       body: Column(
         children: [
